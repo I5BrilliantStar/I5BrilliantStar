@@ -1,84 +1,96 @@
-// Chakra imports
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Button,
   Flex,
   Text,
   useColorModeValue,
 } from "@chakra-ui/react";
-// Custom components
 import Card from "components/card/Card.js";
-import React, { useState, useRef} from "react";
-import Webcam from "react-webcam";
+
 export default function TotalSpent(props) {
   const { ...rest } = props;
+  const [fetchImage, setFetchImage] = useState(true);
+  const [data, setData] = useState({
+    qr_data: "",
+    qr_image: "",
+    label: "",
+  });
 
-  const webcamRef = useRef(null);
-  const [refreshKey, setRefreshKey] = useState(0);
-
-  const refreshCamera = () => {
-    setRefreshKey(prevKey => prevKey + 1);
+  const toggleFetchImage = () => {
+    setFetchImage((prevState) => !prevState);
   };
-  // Chakra Color Mode
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (fetchImage) {
+        try {
+          const response = await axios.get("http://10.10.10.111:5000/stream");
+          setData(response.data);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+    };
+
+    const intervalId = setInterval(fetchData, 33);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [fetchImage]);
+
   const textColor = useColorModeValue("secondaryGray.900", "white");
+
   return (
     <Card
-      justifyContent='center'
-      align='center'
-      direction='column'
-      w='100%'
-      mb='0px'
-      {...rest}>
-        <Flex align='center' w='100%' px='15px' py='10px'>
+      justifyContent="center"
+      align="center"
+      direction="column"
+      w="100%"
+      mb="0px"
+      {...rest}
+    >
+      <Flex align="center" w="100%" px="15px" py="10px">
         <Text
-          me='auto'
+          me="auto"
           color={textColor}
-          fontSize='xl'
-          fontWeight='700'
-          lineHeight='100%'>
+          fontSize="xl"
+          fontWeight="700"
+          lineHeight="100%"
+        >
           LIVE Camera
         </Text>
-        </Flex>
-      <Flex justify='space-between' ps='0px' pe='20px' pt='5px'>
-        <Flex align='center' w='100%'>
-          <Webcam
-        key={refreshKey} // 키값을 변경하여 웹캠 컴포넌트를 다시 렌더링
-        ref={webcamRef}
-        mirrored={true}
-        screenshotFormat="image/jpeg"
-        audio={false}
-        videoConstraints={{
-          width: 1280,
-          height: 720,
-          facingMode: 'user',
-        }}
-        style={{
-          width: '100%',
-          height: 'auto',
-        }}
-        // 라즈베리 파이 웹 서버의 웹캠 스트림 엔드포인트에 연결
-        src="http://raspberrypi_ip_address:5000/webcam_feed"
-      />
+      </Flex>
+      <Flex justify="space-between" ps="0px" pe="20px" pt="5px">
+        <Flex align="center" w="100%">
+          <div className="TotalSpent">
+            <img
+              src={"data:image/jpeg;base64," + data.qr_image}
+              alt="Video Stream"
+              style={{ maxWidth: "100%", height: "auto" }}
+            />
+          </div>
         </Flex>
       </Flex>
-      <Flex w='100%' flexDirection={{ base: "column", lg: "row" }}>
-        <Flex flexDirection='column' me='20px' mt='28px'>
-          <Flex align='center' mb='20px'>
-          <Button
-            backgroundColor="brand.500" // 원하는 배경색
-            color="white" // 흰색 글씨색
-            fontSize="sm"
-            fontWeight="500"
-            mt="4px"
-            mr="12px"
-            _hover={{ backgroundColor: "brand.600" }} // 마우스 호버 시 배경색 변경
-            onClick={refreshCamera}
-          >
-            Refresh Camera
-          </Button>
+      <Flex w="100%" flexDirection={{ base: "column", lg: "row" }}>
+        <Flex flexDirection="column" me="20px" mt="28px">
+          <Flex align="center" mb="20px">
+            <Button
+              backgroundColor="brand.500"
+              color="white"
+              fontSize="sm"
+              fontWeight="500"
+              mt="4px"
+              mr="12px"
+              _hover={{ backgroundColor: "brand.600" }}
+              onClick={toggleFetchImage}
+            >
+              {fetchImage ? "Stop Camera" : "Start Camera"}
+            </Button>
           </Flex>
         </Flex>
       </Flex>
     </Card>
   );
 }
-

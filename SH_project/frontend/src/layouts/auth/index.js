@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import routes from "routes.js";
-
 // Chakra imports
 import { Box, useColorModeValue } from "@chakra-ui/react";
 
@@ -37,6 +36,7 @@ export default function Auth() {
       }
     });
   };
+  
   const authBg = useColorModeValue("white", "navy.900");
   document.documentElement.dir = "ltr";
   return (
