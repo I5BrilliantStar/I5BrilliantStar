@@ -35,6 +35,7 @@ import failImage from "assets/img/dashboards/fail.png"
 import repairImg from "assets/img/dashboards/repair.png"
 import percentImg from "assets/img/dashboards/percent.png"
 
+
 export default function UserReports() {
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
@@ -76,10 +77,15 @@ export default function UserReports() {
       >
         <MiniStatistics
           startContent={
-            <div>
-              <Button onClick={toggleButton} style={buttonStyle}>
-                {isOn ? 'On' : 'Off'}
-              </Button>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{ marginTop: '4px', marginBottom: '4px' }}>
+                <Button
+                  onClick={toggleButton}
+                  style={{ ...buttonStyle, width: '80px' }}
+                >
+                  {isOn ? 'On' : 'Off'}
+                </Button>
+              </div>
             </div>
           }
           name='장비 제어 버튼'

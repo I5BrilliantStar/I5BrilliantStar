@@ -29,6 +29,8 @@ function SignUp() {
 
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
+  
+
 
   return (
     <DefaultAuth illustrationBackground={illustration} image={illustration}>
@@ -70,6 +72,27 @@ function SignUp() {
           me="auto"
           mb={{ base: "20px", md: "auto" }}
         >
+          <FormLabel
+              display="flex"
+              ms="4px"
+              fontSize="sm"
+              fontWeight="500"
+              color={textColor}
+              mb="8px"
+            >
+              Name<Text color={brandStars}>*</Text>
+            </FormLabel>
+            <Input
+              isRequired={true}
+              variant="auth"
+              fontSize="sm"
+              ms={{ base: "0px", md: "0px" }}
+              type="text"
+              placeholder="ybkim"
+              mb="24px"
+              fontWeight="500"
+              size="lg"
+            />
           <FormControl>
             <FormLabel
               display="flex"

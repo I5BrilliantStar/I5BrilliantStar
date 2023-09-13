@@ -59,37 +59,8 @@ export default function TotalSpent(props) {
           fontWeight="700"
           lineHeight="100%"
         >
-          AICamera
+          장비 모니터링
         </Text>
-      </Flex>
-      <Flex justify="space-between" ps="0px" pe="20px" pt="5px">
-        <Flex align="center" w="100%">
-          <div className="TotalSpent">
-            <img
-              src={"data:image/jpeg;base64," + data.qr_image}
-              alt="Video Stream"
-              style={{ maxWidth: "100%", height: "auto" }}
-            />
-          </div>
-        </Flex>
-      </Flex>
-      <Flex w="100%" flexDirection={{ base: "column", lg: "row" }}>
-        <Flex flexDirection="column" me="20px" mt="28px">
-          <Flex align="center" mb="20px">
-            <Button
-              backgroundColor="brand.500"
-              color="white"
-              fontSize="sm"
-              fontWeight="500"
-              mt="4px"
-              mr="12px"
-              _hover={{ backgroundColor: "brand.600" }}
-              onClick={toggleFetchImage}
-            >
-              {fetchImage ? "Stop Camera" : "Start Camera"}
-            </Button>
-          </Flex>
-        </Flex>
       </Flex>
     </Card>
   );

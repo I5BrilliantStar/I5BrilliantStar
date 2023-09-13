@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 
 // Chakra imports
 import {
@@ -52,6 +52,18 @@ export default function Banner(props) {
     onClose: onClose1,
   } = useDisclosure();
 
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editedProductName, setEditedProductName] = useState(""); // 수정된 상품 이름
+  const [editedProductPrice, setEditedProductPrice] = useState(""); // 수정된 상품 가격
+  const [editedProductDescription, setEditedProductDescription] = useState(""); // 수정된 상품 설명
+  const handleDeleteProduct = () => {
+    // 여기에서 상품을 삭제하는 API 호출 또는 상태 업데이트 등의 로직을 구현하세요.
+    // 삭제 완료 후 모달을 닫을 수 있습니다.
+    setIsEditModalOpen(false);
+  };
+  
+  
   return (
     <Menu isOpen={isOpen1} onClose={onClose1}>
       <MenuButton
@@ -80,22 +92,31 @@ export default function Banner(props) {
         borderRadius='20px'
         p='15px'>
         <MenuItem
-          transition='0.2s linear'
+          transition="0.2s linear"
           color={textColor}
           _hover={textHover}
-          p='0px'
-          borderRadius='8px'
+          p="0px"
+          borderRadius="8px"
           _active={{
             bg: "transparent",
           }}
           _focus={{
             bg: "transparent",
           }}
-          mb='10px'>
-          <Flex align='center'>
-            <Icon as={MdOutlinePerson} h='16px' w='16px' me='8px' />
-            <Text fontSize='sm' fontWeight='400'>
-              Panel 1
+          mb="10px"
+          onClick={() => {
+            // 수정 모달 열기
+            setIsEditModalOpen(true);
+            // 상품 정보를 모달에 채우기 (예: 이름, 가격, 설명)
+            setEditedProductName(/* 현재 상품 이름 */);
+            setEditedProductPrice(/* 현재 상품 가격 */);
+            setEditedProductDescription(/* 현재 상품 설명 */);
+          }}
+        >
+          <Flex align="center">
+            <Icon as={MdOutlinePerson} h="16px" w="16px" me="8px" />
+            <Text fontSize="sm" fontWeight="400">
+              수정
             </Text>
           </Flex>
         </MenuItem>
@@ -115,46 +136,7 @@ export default function Banner(props) {
           <Flex align='center'>
             <Icon as={MdOutlineCardTravel} h='16px' w='16px' me='8px' />
             <Text fontSize='sm' fontWeight='400'>
-              Panel 2
-            </Text>
-          </Flex>
-        </MenuItem>
-        <MenuItem
-          transition='0.2s linear'
-          p='0px'
-          borderRadius='8px'
-          color={textColor}
-          _hover={textHover}
-          _active={{
-            bg: "transparent",
-          }}
-          _focus={{
-            bg: "transparent",
-          }}
-          mb='10px'>
-          <Flex align='center'>
-            <Icon as={MdOutlineLightbulb} h='16px' w='16px' me='8px' />
-            <Text fontSize='sm' fontWeight='400'>
-              Panel 3
-            </Text>
-          </Flex>
-        </MenuItem>
-        <MenuItem
-          transition='0.2s linear'
-          color={textColor}
-          _hover={textHover}
-          p='0px'
-          borderRadius='8px'
-          _active={{
-            bg: "transparent",
-          }}
-          _focus={{
-            bg: "transparent",
-          }}>
-          <Flex align='center'>
-            <Icon as={MdOutlineSettings} h='16px' w='16px' me='8px' />
-            <Text fontSize='sm' fontWeight='400'>
-              Panel 4
+              삭제
             </Text>
           </Flex>
         </MenuItem>
