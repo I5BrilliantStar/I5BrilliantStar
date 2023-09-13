@@ -31,7 +31,9 @@ import {
 } from "views/admin/default/variables/columnsData";
 import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
 import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
-import Usa from "assets/img/dashboards/usa.png";
+import failImage from "assets/img/dashboards/fail.png"
+import repairImg from "assets/img/dashboards/repair.png"
+import percentImg from "assets/img/dashboards/percent.png"
 
 export default function UserReports() {
   const brandColor = useColorModeValue("brand.500", "white");
@@ -63,6 +65,8 @@ export default function UserReports() {
     setDefectiveCount(defectiveCount + 1);
   };
 
+  const defectiveRatio = (defectiveCount / productCount) * 100;
+
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid
@@ -92,28 +96,31 @@ export default function UserReports() {
               }
             />
           }
-          name='Spend this month'
-          value='$642.39'
+          name='Total $'
+          value={defectiveCount}
         />
-        <MiniStatistics name='상품개수' value={productCount} />
         <MiniStatistics
-          endContent={
-            <Flex me='-16px' mt='10px'>
-              <FormLabel htmlFor='balance'>
-                <Avatar src={Usa} />
-              </FormLabel>
-              <Select
-                id='balance'
-                variant='mini'
-                mt='5px'
-                me='0px'
-                defaultValue='usd'
-              >
-                <option value='usd'>USD</option>
-                <option value='eur'>EUR</option>
-                <option value='gba'>GBA</option>
-              </Select>
-            </Flex>
+         startContent={
+          <IconBox
+            w='56px'
+            h='56px'
+            bg={boxBg}
+            icon={
+              <img src={failImage} alt="Fail" width="32px" height="32px" style={{ transform: 'rotate(180deg) scaleX(-1)'}} />
+            }
+          />
+        }
+         name='상품개수' value={productCount} />
+        <MiniStatistics
+          startContent={
+            <IconBox
+              w='56px'
+              h='56px'
+              bg={boxBg}
+              icon={
+                <img src={failImage} alt="Fail" width="32px" height="32px" />
+              }
+            />
           }
           name='불량품 개수'
           value={defectiveCount}
@@ -123,32 +130,29 @@ export default function UserReports() {
             <IconBox
               w='56px'
               h='56px'
-              bg='linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)'
-              icon={<Icon w='28px' h='28px' as={MdAddTask} color='white' />}
-            />
-          }
-          name='New Tasks'
-          value='154'
-        />
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
               bg={boxBg}
               icon={
-                <Icon
-                  w='32px'
-                  h='32px'
-                  as={MdFileCopy}
-                  color={brandColor}
-                />
+                <img src={repairImg} alt="Fail" width="32px" height="32px" />
               }
             />
           }
-          name='Total Projects'
-          value='2935'
+          name='박스 불량 체크'
+          value={defectiveCount}
         />
+        <MiniStatistics
+  startContent={
+    <IconBox
+      w='56px'
+      h='56px'
+      bg={boxBg}
+      icon={
+        <img src={percentImg} alt="Fail" width="32px" height="32px" />
+      }
+    />
+  }
+  name='불량품 비율'
+  value={`${defectiveRatio.toFixed(2)}%`} // 불량품 비율을 표시
+/>
       </SimpleGrid>
 
       <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>

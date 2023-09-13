@@ -59,7 +59,7 @@ export default function TotalSpent(props) {
           fontWeight="700"
           lineHeight="100%"
         >
-          LIVE Camera
+          AICamera
         </Text>
       </Flex>
       <Flex justify="space-between" ps="0px" pe="20px" pt="5px">
